@@ -21,7 +21,7 @@ function handleFormSubmit(event){
    
 }
 window.addEventListener("DOMContentLoaded",()=>{
- axios.get("https://crudcrud.com/api/11d3c2eb104c4bec8fdc6fa1eb736b74/appointmentDate")
+ axios.get("https://crudcrud.com/api/2b58a7ba46b14e3e8d62e2510c3aed65/appointmentDate")
     .then((response)=>{
         console.log(response)
 
@@ -39,6 +39,27 @@ function showUserOnScreen(obj){
     document.getElementById('phone').value='';
    
     const parentNode=document.getElementById('listofitems');
-    const childnode=`<li id=${obj._id}> ${obj.name} -${obj.email}-${obj.phone}  </li> `
+
+    const childnode=`<li id=${obj._id}> ${obj.name} -${obj.email}-${obj.phone} 
+                    <button onclick=DeleteUser('${obj._id}') >Delete User</button> <button>Edit User</button></li> `
     parentNode.innerHTML=parentNode.innerHTML+childnode
+}
+
+function DeleteUser(id){
+    axios.delete(`https://crudcrud.com/api/2b58a7ba46b14e3e8d62e2510c3aed65/appointmentDate/${id}`)
+    .then((res)=>{
+        removeUserFromScreen(id)
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+}
+
+function removeUserFromScreen(id){
+    const parentNode=document.getElementById('listofitems')
+    const ChildNodeToBeRemoved=document.getElementById(id)
+    if(ChildNodeToBeRemoved){
+
+        parentNode.removeChild(ChildNodeToBeRemoved)
+    }
 }
