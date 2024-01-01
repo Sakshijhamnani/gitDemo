@@ -9,7 +9,7 @@ function handleFormSubmit(event){
         email ,
         phone
     }
-    axios.post("https://crudcrud.com/api/2b58a7ba46b14e3e8d62e2510c3aed65/appointmentDate", obj)
+    axios.post("https://crudcrud.com/api/dd48a0d25ed54be8bedeec5fadaaf38b/appointmentData", obj)
     .then((response)=>{
         showUserOnScreen(response.data)
         console.log(response)
@@ -21,7 +21,7 @@ function handleFormSubmit(event){
    
 }
 window.addEventListener("DOMContentLoaded",()=>{
- axios.get("https://crudcrud.com/api/2b58a7ba46b14e3e8d62e2510c3aed65/appointmentDate")
+ axios.get("https://crudcrud.com/api/dd48a0d25ed54be8bedeec5fadaaf38b/appointmentData")
     .then((response)=>{
         console.log(response)
 
@@ -41,12 +41,23 @@ function showUserOnScreen(obj){
     const parentNode=document.getElementById('listofitems');
 
     const childnode=`<li id=${obj._id}> ${obj.name} -${obj.email}-${obj.phone} 
-                    <button onclick=DeleteUser('${obj._id}') >Delete User</button> <button>Edit User</button></li> `
+                    <button onclick=DeleteUser('${obj._id}') >Delete User</button>
+                    <button onclick="editUserDetails('${obj._id}','${obj.name}','${obj.email}','${obj.phone}')">Edit User</button>
+</li> `
     parentNode.innerHTML=parentNode.innerHTML+childnode
 }
 
+
+
+function editUserDetails(id,name,email,phone){
+
+  document.getElementById('name').value=name;
+  document.getElementById('email').value=email;
+  document.getElementById('phone').value=phone;
+  DeleteUser(id)
+}
 function DeleteUser(id){
-    axios.delete(`https://crudcrud.com/api/2b58a7ba46b14e3e8d62e2510c3aed65/appointmentDate/${id}`)
+    axios.delete(`https://crudcrud.com/api/dd48a0d25ed54be8bedeec5fadaaf38b/appointmentData/${id}`)
     .then((res)=>{
         removeUserFromScreen(id)
     })
