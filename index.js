@@ -1,0 +1,44 @@
+function handleFormSubmit(event){
+    event.preventDefault();
+    const name=event.target.name.value
+    const email=event.target.email.value
+    const phone=event.target.phone.value
+ 
+    const obj={
+        name,
+        email ,
+        phone
+    }
+    axios.post("https://crudcrud.com/api/2b58a7ba46b14e3e8d62e2510c3aed65/appointmentDate", obj)
+    .then((response)=>{
+        showUserOnScreen(response.data)
+        console.log(response)
+    })
+    .catch((err)=>{
+        document.body.innerHTML=document.body.innerHTML+"<h4>something went wrong</h4>"
+        console.log(err)
+    })
+   
+}
+window.addEventListener("DOMContentLoaded",()=>{
+ axios.get("https://crudcrud.com/api/11d3c2eb104c4bec8fdc6fa1eb736b74/appointmentDate")
+    .then((response)=>{
+        console.log(response)
+
+        for(var i=0 ; i<response.data.length ; i++){
+            showUserOnScreen(response.data[i])
+        }
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+})
+function showUserOnScreen(obj){
+    document.getElementById('name').value='';
+    document.getElementById('email').value='';
+    document.getElementById('phone').value='';
+   
+    const parentNode=document.getElementById('listofitems');
+    const childnode=`<li id=${obj._id}> ${obj.name} -${obj.email}-${obj.phone}  </li> `
+    parentNode.innerHTML=parentNode.innerHTML+childnode
+}
