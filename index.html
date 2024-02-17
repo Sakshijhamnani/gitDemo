@@ -31,7 +31,7 @@
         <option>internet</option>
         <option>bookss</option>
         </select>
-        <label for="choosecategory" class="form-label"><h3>Choose category</h3></label>
+        <label for="category" class="form-label"><h3>Choose category</h3></label>
         <select class="form-select" id="category">
         <option>select</option>
         <option>Entertainment</option>
@@ -43,6 +43,7 @@
     </div>
 </form>
 <ul id="project"></ul>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.3/axios.min.js"></script>
 <script>
     function onsignup(event){
         event.preventDefault();
@@ -55,8 +56,17 @@
             description,
             category
         }
-        localStorage.setItem(obj.category ,JSON.stringify(obj))
-        showUserOnScreen(obj)
+      
+       axios.post('https://crudcrud.com/api/11d3c2eb104c4bec8fdc6fa1eb736b74/appointmentdata',obj).then((response)=>{
+        showUserOnScreen(response.data)
+        console.log(response)
+       }).catch((err)=>{
+        document.body.innerHTML=document.body.innerHTML+"<h4>something went wrong</h4>"
+        console.log(err)
+       })
+      
+        //  localStorage.setItem(obj.category ,JSON.stringify(obj))
+        //showUserOnScreen(obj)
     }
     function showUserOnScreen(obj){
         const parent=document.getElementById('project')
